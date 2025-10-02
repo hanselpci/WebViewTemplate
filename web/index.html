@@ -63,6 +63,12 @@
       .getElementById("contactForm")
       .addEventListener("submit", function (e) {
         e.preventDefault();
+        // const form = e.target;
+        // form.reset();
+
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = "";
+        resultDiv.className = "";
 
         const formData = {
           name: document.getElementById("name").value,
@@ -72,8 +78,7 @@
         // Call handleFormSubmit function in C++
         handleFormSubmit(JSON.stringify(formData))
           .then((response) => {
-            const result = JSON.parse(response);
-            const resultDiv = document.getElementById("result");
+            const result = response;
 
             if (result.status === "success") {
               resultDiv.className = "success";

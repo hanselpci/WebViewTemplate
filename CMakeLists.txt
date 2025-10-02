@@ -20,6 +20,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(webview)
 
+FetchContent_Declare(
+    json
+    GIT_REPOSITORY https://github.com/nlohmann/json
+    GIT_TAG v3.12.0
+)
+FetchContent_MakeAvailable(json)
+
 add_subdirectory(src)
 
 # Copy HTML file to build directory

@@ -1,5 +1,8 @@
 #include "webview/webview.h"
 #include <iostream>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 std::string getExecutableDirectory() {
     std::string path;
@@ -18,10 +21,15 @@ std::string getExecutableDirectory() {
 std::string handleFormSubmit(const std::string &data)
 {
     std::cout << "Form Data: " << data << std::endl;
+     json jreq = json::parse(data);
 
     // Handle JSON
-    // ...
-    return R"({"status": "success", "message": "Submitted Successfully."})";
+     json jdata = {
+        {"status", "success"},
+        {"message", "Success: " + jreq.dump()}
+    };
+
+    return jdata.dump();
 }
 
 int main()
