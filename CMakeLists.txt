@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.16)
+project(example LANGUAGES CXX)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+
+include(FetchContent)
+FetchContent_Declare(
+    webview
+    GIT_REPOSITORY https://github.com/webview/webview
+    GIT_TAG 0.12.0)
+FetchContent_MakeAvailable(webview)
+
+add_subdirectory(src)
+
+# Copy HTML file to build directory
+file(COPY ${PROJECT_SOURCE_DIR}/web DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE})
+
+message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+# Remove console window on Windows if building in Release mode
+if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
+    )
+endif()
+
