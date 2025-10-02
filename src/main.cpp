@@ -24,14 +24,8 @@ std::string handleFormSubmit(const std::string &data)
     return R"({"status": "success", "message": "Submitted Successfully."})";
 }
 
-#ifdef _WIN32
-int WINAPI WinMain(HINSTANCE /*hInst*/, HINSTANCE /*hPrevInst*/,
-                   LPSTR /*lpCmdLine*/, int /*nCmdShow*/)
-{
-#else
 int main()
 {
-#endif
     try
     {
         webview::webview w(true, nullptr);
